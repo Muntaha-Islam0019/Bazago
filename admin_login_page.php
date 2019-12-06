@@ -16,16 +16,23 @@ if (isset($_POST['admin_email'])) {
     $admin_email = $_POST['admin_email'];
     $admin_password = $_POST['admin_password'];
 
-    $sql = "select * from admin where e_mail = '" . $admin_email . "' and Password = '" . $admin_password . "' limit 1";
+    $matching_info = "select * from admin where e_mail = '" . $admin_email . "' and Password = '" . $admin_password . "' limit 1";
+    $admin_name_finding = "select admin_name from admin where e_mail = '" . $admin_email . "' and Password = '" . $admin_password . "'";
 
-    $result = $connection_to_mysql->query($sql);
+    $result_of_matching = $connection_to_mysql->query($matching_info);
+    $result_of_username = $connection_to_mysql->query($admin_name_finding);
+
+    if ($result_of_username) {
+        $row = $result_of_username->fetch_assoc();
+        $_SESSION['admin_name'] = $row["admin_name"];
+    }
 
     if (isset($_SESSION['logged_in_as_admin']) && $_SESSION['logged_in_as_admin'] == true) {
         header("Location: admin_login_success.php");
     }
 
     if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
-        if ($result->num_rows == 1) {
+        if ($result_of_matching->num_rows == 1) {
             $_SESSION['logged_in_as_admin'] = true;
             header("Location: admin_login_success.php");
         } else {

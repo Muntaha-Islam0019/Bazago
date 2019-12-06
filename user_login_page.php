@@ -16,16 +16,23 @@ if (isset($_POST['user_email'])) {
     $user_email = $_POST['user_email'];
     $user_password = $_POST['user_password'];
 
-    $sql = "select * from user where e_mail = '" . $user_email . "' and Password = '" . $user_password . "' limit 1";
+    $matching_info = "select * from user where e_mail = '" . $user_email . "' and Password = '" . $user_password . "' limit 1";
+    $user_name_finding = "select user_name from user where e_mail = '" . $user_email . "' and Password = '" . $user_password . "'";
 
-    $result = $connection_to_mysql->query($sql);
+    $result_of_matching = $connection_to_mysql->query($matching_info);
+    $result_of_username = $connection_to_mysql->query($user_name_finding);
+
+    if ($result_of_username) {
+        $row = $result_of_username->fetch_assoc();
+        $_SESSION['user_name'] = $row["user_name"];
+    }
 
     if (isset($_SESSION['logged_in_as_user']) && $_SESSION['logged_in_as_user'] == true) {
         header("Location: user_login_success.php");
     }
 
     if (isset($_POST['user_email']) && isset($_POST['user_password'])) {
-        if ($result->num_rows == 1) {
+        if ($result_of_matching->num_rows == 1) {
             $_SESSION['logged_in_as_user'] = true;
             header("Location: user_login_success.php");
         } else {
@@ -40,7 +47,7 @@ if (isset($_POST['user_email'])) {
 <body>
 
 <h2 align="center">
-    User Login
+    user Login
 </h2>
 
 Please enter your login information.<br/><br/>
