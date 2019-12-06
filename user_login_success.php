@@ -3,7 +3,7 @@
 session_start();
 
 echo "
-Hello " . $_SESSION['user_name'] . "!<br>
+Hello <b>" . $_SESSION['user_name'] . "</b>!<br>
 You've successfully logged in.
 ";
 

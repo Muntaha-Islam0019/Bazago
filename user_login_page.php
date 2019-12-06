@@ -47,7 +47,7 @@ if (isset($_POST['user_email'])) {
 <body>
 
 <h2 align="center">
-    user Login
+    User Login
 </h2>
 
 Please enter your login information.<br/><br/>
