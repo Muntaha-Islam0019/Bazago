@@ -20,13 +20,13 @@ if (isset($_POST['admin_email'])) {
 
     $result = $connection_to_mysql->query($sql);
 
-    if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
+    if (isset($_SESSION['logged_in_as_admin']) && $_SESSION['logged_in_as_admin'] == true) {
         header("Location: admin_login_success.php");
     }
 
     if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
         if ($result->num_rows == 1) {
-            $_SESSION['loggedIn'] = true;
+            $_SESSION['logged_in_as_admin'] = true;
             header("Location: admin_login_success.php");
         } else {
             echo "Please enter correct information.<br>";
