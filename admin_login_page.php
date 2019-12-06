@@ -4,12 +4,18 @@
 
 session_start();
 
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+$admin_email = "a_email@gmail.com";
+$admin_password = "my_pass";
+
+if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
     header("Location: admin_login_success.php");
 }
 
 if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
-
+    if ($_POST['admin_email'] == $admin_email && $_POST['admin_password'] == $admin_password) {
+        $_SESSION['loggedIn'] = true;
+        header("Location: admin_login_success.php");
+    }
 }
 
 ?>
@@ -23,7 +29,7 @@ if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
 
 Please enter your login information.<br/><br/>
 
-<form method="post" action="login_page.php">
+<form method="post" action="admin_login_page.php">
 
     <b>Email:</b><br/>
     <label>
