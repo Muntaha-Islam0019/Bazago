@@ -9,5 +9,5 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
 ?>
 
 <h2 align="center">
-    You have successfully logged in!
+    You have successfully logged in as an admin!
 </h2>

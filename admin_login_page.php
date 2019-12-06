@@ -2,21 +2,7 @@
 
 <?php
 
-/*session_start();
-
-$admin_email = "a_email@gmail.com";
-$admin_password = "my_pass";
-
-if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
-    header("Location: admin_login_success.php");
-}
-
-if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
-    if ($_POST['admin_email'] == $admin_email && $_POST['admin_password'] == $admin_password) {
-        $_SESSION['loggedIn'] = true;
-        header("Location: admin_login_success.php");
-    }
-}*/
+session_start();
 
 $server_name = "localhost";
 $user_name = "root";
@@ -34,10 +20,17 @@ if (isset($_POST['admin_email'])) {
 
     $result = $connection_to_mysql->query($sql);
 
-    if ($result->num_rows == 1) {
+    if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
         header("Location: admin_login_success.php");
-    } else {
-        echo "Please enter correct information.<br>";
+    }
+
+    if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
+        if ($result->num_rows == 1) {
+            $_SESSION['loggedIn'] = true;
+            header("Location: admin_login_success.php");
+        } else {
+            echo "Please enter correct information.<br>";
+        }
     }
 }
 
