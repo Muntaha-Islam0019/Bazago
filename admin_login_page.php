@@ -2,14 +2,9 @@
 
 <?php
 
+require_once 'config.php';
+
 session_start();
-
-$server_name = "localhost";
-$user_name = "root";
-$password = "";
-$database_name = "bazago";
-
-$connection_to_mysql = mysqli_connect($server_name, $user_name, $password, $database_name);
 
 if (isset($_POST['admin_email'])) {
 
@@ -18,13 +13,20 @@ if (isset($_POST['admin_email'])) {
 
     $matching_info = "select * from admin where e_mail = '" . $admin_email . "' and Password = '" . $admin_password . "' limit 1";
     $admin_name_finding = "select admin_name from admin where e_mail = '" . $admin_email . "' and Password = '" . $admin_password . "'";
+    $admin_id_finding = "select admin_id from admin where e_mail = '" . $admin_email . "' and Password = '" . $admin_password . "'";
 
     $result_of_matching = $connection_to_mysql->query($matching_info);
     $result_of_username = $connection_to_mysql->query($admin_name_finding);
+    $result_of_admin_id = $connection_to_mysql->query($admin_id_finding);
 
     if ($result_of_username) {
-        $row = $result_of_username->fetch_assoc();
-        $_SESSION['admin_name'] = $row["admin_name"];
+        $row_one = $result_of_username->fetch_assoc();
+        $_SESSION['admin_name'] = $row_one["admin_name"];
+    }
+
+    if ($result_of_admin_id) {
+        $row_two = $result_of_admin_id->fetch_assoc();
+        $_SESSION['admin_id'] = $row_two["admin_id"];
     }
 
     if (isset($_SESSION['logged_in_as_admin']) && $_SESSION['logged_in_as_admin'] == true) {

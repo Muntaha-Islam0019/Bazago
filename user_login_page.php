@@ -2,14 +2,9 @@
 
 <?php
 
+require_once 'config.php';
+
 session_start();
-
-$server_name = "localhost";
-$user_name = "root";
-$password = "";
-$database_name = "bazago";
-
-$connection_to_mysql = mysqli_connect($server_name, $user_name, $password, $database_name);
 
 if (isset($_POST['user_email'])) {
 
@@ -18,13 +13,20 @@ if (isset($_POST['user_email'])) {
 
     $matching_info = "select * from user where e_mail = '" . $user_email . "' and Password = '" . $user_password . "' limit 1";
     $user_name_finding = "select user_name from user where e_mail = '" . $user_email . "' and Password = '" . $user_password . "'";
+    $user_id_finding = "select user_id from user where e_mail = '" . $user_email . "' and Password = '" . $user_password . "'";
 
     $result_of_matching = $connection_to_mysql->query($matching_info);
     $result_of_username = $connection_to_mysql->query($user_name_finding);
+    $result_of_user_id = $connection_to_mysql->query($user_id_finding);
 
     if ($result_of_username) {
-        $row = $result_of_username->fetch_assoc();
-        $_SESSION['user_name'] = $row["user_name"];
+        $row_one = $result_of_username->fetch_assoc();
+        $_SESSION['user_name'] = $row_one["user_name"];
+    }
+
+    if ($result_of_user_id) {
+        $row_two = $result_of_user_id->fetch_assoc();
+        $_SESSION['user_id'] = $row_two["user_id"];
     }
 
     if (isset($_SESSION['logged_in_as_user']) && $_SESSION['logged_in_as_user'] == true) {
