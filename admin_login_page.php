@@ -2,7 +2,7 @@
 
 <?php
 
-session_start();
+/*session_start();
 
 $admin_email = "a_email@gmail.com";
 $admin_password = "my_pass";
@@ -15,6 +15,29 @@ if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
     if ($_POST['admin_email'] == $admin_email && $_POST['admin_password'] == $admin_password) {
         $_SESSION['loggedIn'] = true;
         header("Location: admin_login_success.php");
+    }
+}*/
+
+$server_name = "localhost";
+$user_name = "root";
+$password = "";
+$database_name = "bazago";
+
+$connection_to_mysql = mysqli_connect($server_name, $user_name, $password, $database_name);
+
+if (isset($_POST['admin_email'])) {
+
+    $admin_email = $_POST['admin_email'];
+    $admin_password = $_POST['admin_password'];
+
+    $sql = "select * from admin where e_mail = '" . $admin_email . "' and Password = '" . $admin_password . "' limit 1";
+
+    $result = $connection_to_mysql->query($sql);
+
+    if ($result->num_rows == 1) {
+        header("Location: admin_login_success.php");
+    } else {
+        echo "Please enter correct information.<br>";
     }
 }
 
