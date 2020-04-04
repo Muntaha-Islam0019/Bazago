@@ -3,7 +3,7 @@ Bazago is a demonstration of a website for efficient grocery shopping. Basically
 
 The concept of this website is somewhat like Trivago. It shows you the best price for each item (for instance, potato) and where you can find it.
 
-The main project, which I submitted (and which I am not allowed to upload) contains features like:
+It contains features like:
 - Shows the best price for each item from the shops around you,
 - Helps the users to send requests to change the prices if they found out that the price has dropped,
 - Better admin & user interface,
